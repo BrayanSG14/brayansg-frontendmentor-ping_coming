@@ -2,18 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
   <link href="https://fonts.google.com/specimen/Libre+Franklin" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   <link rel="stylesheet" href="style.css">
   <title>Frontend Mentor | Ping coming soon page</title>
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 0.6875rem; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
 </head>
 <body>
   <main>
@@ -26,12 +20,13 @@
     </p>
     <form class="form" novalidate>
       <div class="input-email">
-        <label for="email" class="sr-only">Email address</label>
+        <label for="email" class="email"></label>
         <input id="email" type="email" placeholder="Your email address...">
-        <p class="error-message">Please provide a valid email address</p>
       </div>
-      <button class="btn-noti">Notify Me</button>
+      <button type="button" class="btn-noti">Notify Me</button>
     </form>
+    <p class="success-message">Your email has been registered!</p>
+    <p class="error-message">Please provide a valid email address</p>
     <img class="dashboard" src="./images/illustration-dashboard.png" alt="">
     <div class="social-list">
       <a href="#" class="btn-facebook" aria-label="Facebook">
@@ -49,19 +44,22 @@
     </footer>
   </main>
   <script>
-    const form = document.querySelector(".form");
-    const emailInput = document.querySelector("#email");
-    form.addEventListener("submit", function(event) {
-        event.preventDefault();
-        const email = emailInput.value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const esValido = emailRegex.test(email);
-        if (!esValido) {
-            form.classList.add("has-error");
-        } else {
-            form.classList.remove("has-error");
-        }
-    });
+    const emailInput = document.getElementById('email');
+    const errorMessage = document.querySelector('.error-message');
+    const btnNoti = document.querySelector('.btn-noti');
+    const successMessage = document.querySelector('.success-message');
+
+    btnNoti.addEventListener('click', function(){
+      const mail = emailInput.value;
+      if (mail === "" || !emailInput.checkValidity()){
+        errorMessage.style.display = "block";
+        successMessage.style.display = "none";
+        return;
+      }
+      errorMessage.style.display = "none";
+      successMessage.style.display = "block";
+      emailInput.value = "";
+    })
   </script>
 </body>
 </html>
